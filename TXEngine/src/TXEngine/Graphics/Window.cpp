@@ -167,6 +167,9 @@ void Window::clear(Color color)
 
 const EventList* Window::pollEvents() const
 {
+    for (const auto event : *eventList) {
+        delete event;
+    }
     eventList->clear();
     glfwPollEvents();
 

@@ -31,9 +31,9 @@
 *.out
 *.app
 
-EngineTest
 out
 copy.py
 cpp.hint
 .vs
 TXEngine/lib
+EngineTest/lib
