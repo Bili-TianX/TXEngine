@@ -1,5 +1,5 @@
 #include <TXEngine/TXEngine.hpp>
-#include <vcruntime_new_debug.h>
+#include <iostream>
 
 using namespace tx;
 
@@ -11,6 +11,12 @@ void testWindow()
         for (const auto& event : *(w->pollEvents())) {
             if (event->getType() == EventType::Closed) {
                 w->close();
+            }
+            else if (event->getType() == EventType::TextEntered) {
+                auto c = static_cast<TextEnterEvent*>(event)->getUnicode();
+                std::wstring s;
+                s.push_back(c);
+                std::cout << tx::wstring_to_string(s) << std::endl;
             }
         }
 
@@ -24,6 +30,7 @@ void testWindow()
 void testShape()
 {
     Window* w = new Window(1280, 720, "Hello, TXEngine!");
+    w->setViewport({100, 100, 100, 100});
 
     RectangleShape* r = new RectangleShape(100, 100, 100, 100);
     r->setColor(Color(128, 128, 128));
@@ -119,6 +126,6 @@ void testFont()
 
 int main()
 {
-    testShape();
+    testWindow();
     return 0;
 }

@@ -30,7 +30,7 @@ namespace tx
 /**
  * 窗口大小改变事件
  */
-class ResizeEvent : public EventBase
+class TX_API ResizeEvent : public EventBase
 {
 private:
     int m_width;

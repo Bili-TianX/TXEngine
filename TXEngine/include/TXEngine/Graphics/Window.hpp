@@ -28,6 +28,7 @@
 #include <TXEngine/Export.hpp>
 #include <TXEngine/Event/EventBase.hpp>
 #include <TXEngine/Graphics/Color.hpp>
+#include <TXEngine/Graphics/Viewport.hpp>
 #include <TXEngine/Graphics/Drawable.hpp>
 #include <TXEngine/OpenGL/Shader.hpp>
 
@@ -52,6 +53,7 @@ private:
 
     EventList* eventList;
 
+    Viewport viewport;
     Shader* shader;
 
     static void initGLFW();
@@ -74,6 +76,8 @@ public:
      * 是否启用垂直同步
      */
     void setVSync(bool enable);
+
+    void setViewport(const Viewport &viewport);
 
     /**
      * 处理事件

@@ -24,3 +24,4 @@
 
 #include <TXEngine/Util/Vector.hpp>
 #include <TXEngine/Util/Clock.hpp>
+#include <TXEngine/Util/String.hpp>

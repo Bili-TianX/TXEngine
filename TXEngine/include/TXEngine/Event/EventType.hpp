@@ -41,7 +41,12 @@ enum class EventType
     /**
      * 键盘按下
      */
-    KeyPressed
+    KeyPressed,
+    KeyReleased,
+    MouseButtonPressed,
+    MouseButtonReleased,
+    MouseMoved,
+    TextEntered
 };
 
 }// namespace tx

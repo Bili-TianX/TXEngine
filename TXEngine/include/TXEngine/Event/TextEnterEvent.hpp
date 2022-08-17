@@ -22,14 +22,20 @@
 
 #pragma once
 
-#include <TXEngine/Graphics/CircleShape.hpp>
-#include <TXEngine/Graphics/Color.hpp>
-#include <TXEngine/Graphics/Drawable.hpp>
-#include <TXEngine/Graphics/RectangleShape.hpp>
-#include <TXEngine/Graphics/Shape.hpp>
-#include <TXEngine/Graphics/Texture.hpp>
-#include <TXEngine/Graphics/TextureTarget.hpp>
-#include <TXEngine/Graphics/Window.hpp>
-#include <TXEngine/Graphics/Text.hpp>
-#include <TXEngine/Graphics/Font.hpp>
-#include <TXEngine/Graphics/Viewport.hpp>
+#include <TXEngine/Event/EventBase.hpp>
+
+namespace tx
+{
+
+class TX_API TextEnterEvent : public EventBase
+{
+private:
+    wchar_t m_unicode;
+
+public:
+    TextEnterEvent(wchar_t unicode);
+
+    wchar_t getUnicode();
+};
+
+}// namespace tx

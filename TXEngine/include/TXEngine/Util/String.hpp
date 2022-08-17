@@ -22,14 +22,12 @@
 
 #pragma once
 
-#include <TXEngine/Graphics/CircleShape.hpp>
-#include <TXEngine/Graphics/Color.hpp>
-#include <TXEngine/Graphics/Drawable.hpp>
-#include <TXEngine/Graphics/RectangleShape.hpp>
-#include <TXEngine/Graphics/Shape.hpp>
-#include <TXEngine/Graphics/Texture.hpp>
-#include <TXEngine/Graphics/TextureTarget.hpp>
-#include <TXEngine/Graphics/Window.hpp>
-#include <TXEngine/Graphics/Text.hpp>
-#include <TXEngine/Graphics/Font.hpp>
-#include <TXEngine/Graphics/Viewport.hpp>
+#include <string>
+#include <TXEngine/Export.hpp>
+
+namespace tx
+{
+
+std::string TX_API wstring_to_string(const std::wstring& s);
+
+}

@@ -6,9 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <al/alut.h>
 
-#include <TXEngine/Event/ResizeEvent.hpp>
-#include <TXEngine/Event/KeyPressEvent.hpp>
-#include <TXEngine/Event/CloseEvent.hpp>
+#include <TXEngine/Event.hpp>
 #include <TXEngine/Graphics/Window.hpp>
 #include <TXEngine/OpenGL/GLUtil.hpp>
 #include <TXEngine/Audio/AlUtil.hpp>
@@ -78,12 +76,12 @@ void Window::initCallback() const
 {
     auto window = getGLFWWindow(m_windowHandle);
 
-    glfwSetWindowCloseCallback(window, [](auto window) {
+    glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
         static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
                 ->window->eventList->push_back(new CloseEvent());
     });
 
-    glfwSetWindowSizeCallback(window, [](auto window, auto width, auto height) {
+    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
         static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
                 ->window->eventList->push_back(new ResizeEvent(width, height));
@@ -94,6 +92,31 @@ void Window::initCallback() const
             static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
                     ->window->eventList->push_back(new KeyPressEvent(key));
         }
+        else if (action == GLFW_RELEASE) {
+            static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
+                    ->window->eventList->push_back(new KeyReleaseEvent(key));
+        }
+    });
+
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+        if (action == GLFW_PRESS) {
+            static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
+                    ->window->eventList->push_back(new MouseButtonPressEvent(button));
+        }
+        else if (action == GLFW_RELEASE) {
+            static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
+                    ->window->eventList->push_back(new MouseButtonReleaseEvent(button));
+        }
+    });
+
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+        static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
+                ->window->eventList->push_back(new MouseMoveEvent(xpos, ypos));
+    });
+
+    glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int codepoint) {
+        static_cast<Window::WindowData*>(glfwGetWindowUserPointer(window))
+                ->window->eventList->push_back(new TextEnterEvent(codepoint));
     });
 }
 
@@ -120,14 +143,26 @@ void Window::initOpenAL()
 void Window::initShader()
 {
     shader = getDefaultShader();
+    
+    setViewport({0, 0, (float) m_width, (float) m_height});
+}
+
+void Window::setViewport(const Viewport& viewport)
+{
+    this->viewport = viewport;
+
     shader->bind();
 
     // 缩放
-    auto mat1 = glm::mat3x3(2.0 / m_width, 0, 0, 0, -2.0 / m_height, 0, 0, 0, 1);
+    auto mat1 = glm::mat3x3(2.0 / viewport.width, 0, 0, 0, -2.0 / viewport.height, 0, 0, 0, 1);
     // 平移
     auto mat2 = glm::mat3x3(1, 0, 0, 0, 1, 0, -1, 1, 1);
 
-    glCall(glUniformMatrix3fv(shader->getUniform("windowMatrix"), 1, GL_FALSE, glm::value_ptr(mat2 * mat1)));
+    auto pos = mat1 * glm::vec3(viewport.x, viewport.y, 1);
+    // 平移
+    auto mat3 = glm::mat3x3(1, 0, 0, 0, 1, 0, -pos.x, -pos.y, 1);
+
+    glCall(glUniformMatrix3fv(shader->getUniform("windowMatrix"), 1, GL_FALSE, glm::value_ptr(mat3 * mat2 * mat1)));
 
     shader->unbind();
 }

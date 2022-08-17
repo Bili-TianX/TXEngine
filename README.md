@@ -25,3 +25,14 @@ A Game Engine using Modern OpenGL in C++
 - [GLAD](https://github.com/Dav1dde/glad)
 
 - [GLM](https://github.com/g-truc/glm)
+
+## Changelog
+
+ - 2022年8月17日
+	- 添加了若干事件
+
+	- 添加了Viewport的支持
+
+	- 添加wstring到string的转换
+
+ - 2022年8月16日 提交第一个版本

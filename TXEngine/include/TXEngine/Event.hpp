@@ -27,3 +27,8 @@
 #include <TXEngine/Event/EventType.hpp>
 #include <TXEngine/Event/ResizeEvent.hpp>
 #include <TXEngine/Event/KeyPressEvent.hpp>
+#include <TXEngine/Event/KeyReleaseEvent.hpp>
+#include <TXEngine/Event/MouseButtonPressEvent.hpp>
+#include <TXEngine/Event/MouseButtonReleaseEvent.hpp>
+#include <TXEngine/Event/MouseMoveEvent.hpp>
+#include <TXEngine/Event/TextEnterEvent.hpp>

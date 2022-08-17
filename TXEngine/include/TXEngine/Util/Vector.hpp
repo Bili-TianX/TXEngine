@@ -31,5 +31,6 @@ namespace tx
  * 包含4个float的元组
  */
 using Vector4f = std::tuple<float, float, float, float>;
+using Vector2f = std::tuple<float, float>;
 
 }// namespace tx

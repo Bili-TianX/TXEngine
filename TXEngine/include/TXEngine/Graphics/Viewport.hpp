@@ -22,14 +22,17 @@
 
 #pragma once
 
-#include <TXEngine/Graphics/CircleShape.hpp>
-#include <TXEngine/Graphics/Color.hpp>
-#include <TXEngine/Graphics/Drawable.hpp>
-#include <TXEngine/Graphics/RectangleShape.hpp>
-#include <TXEngine/Graphics/Shape.hpp>
-#include <TXEngine/Graphics/Texture.hpp>
-#include <TXEngine/Graphics/TextureTarget.hpp>
-#include <TXEngine/Graphics/Window.hpp>
-#include <TXEngine/Graphics/Text.hpp>
-#include <TXEngine/Graphics/Font.hpp>
-#include <TXEngine/Graphics/Viewport.hpp>
+#include <TXEngine/Export.hpp>
+
+namespace tx
+{
+
+struct TX_API Viewport
+{
+    float x, y;
+    float width, height;
+
+    Viewport(float x = 0, float y = 0, float width = 0, float height = 0);
+};
+
+}// namespace tx

@@ -153,4 +153,9 @@ enum class Key : short
     MENU          = 348
 };
 
+static inline Key ofKey(short value)
+{
+    return static_cast<Key>(value);
+}
+
 }// namespace tx
