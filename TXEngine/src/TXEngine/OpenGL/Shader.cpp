@@ -48,7 +48,9 @@ unsigned int Shader::compileShader(int type, const std::string& source)
         glCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length));
         char* message = (char*) calloc(length, sizeof(char));
         glCall(glGetShaderInfoLog(shader, length, &length, message));
-        throw std::runtime_error(message);
+        std::string s = message;
+        free(message);
+        throw std::runtime_error(s);
     }
 
     return shader;
